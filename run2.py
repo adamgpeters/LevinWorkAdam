@@ -19,7 +19,7 @@ def plots(data1, data2):
     current_counter = 0
     for xi in range(x):
         for yi in range(y):
-            # ax[xi, yi].title.set_text(f'Injection current {current + current_add * current_counter}pA')
+            ax[xi, yi].title.set_text(f'Injection current {current + current_add * current_counter}pA')
             ax[xi, yi].plot(t, data1[current_counter, :], lw=2, label='observation')
             ax[xi, yi].plot(t, data2[current_counter, :], '--', lw=2, label='posterior sample')
 
