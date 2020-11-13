@@ -1,0 +1,45 @@
+// displaytraces.hoc
+// displays some traces generated from Barela et al. 2006
+
+objref file_id
+file_id = new File()
+file_id.ropen("APthreshold.txt")
+
+strdef tmpstring
+for i=1, 3 {
+	file_id.gets(tmpstring)
+	print tmpstring
+}
+
+objref data_vecs[36]
+
+for i=0, 35 {
+	data_vecs[i] = new Vector()
+}
+for i=0,3000 {
+	for j=0,35 {
+		data_vecs[j].append(file_id.scanvar())
+	}
+}
+
+objref g[36]
+
+objref vbox, hbox[7]
+vbox = new VBox()
+
+vbox.intercept(1)
+   for k=0,6 {
+     hbox[k] = new HBox()
+     hbox[k].intercept(1)
+	for i=k*5+1,(k+1)*5 {
+		g[i] = new Graph()
+		data_vecs[i].line(g[i],data_vecs[0])
+		sprint(tmpstring,"%d",k*5+i)
+		g[i].label(.9,.9,tmpstring)
+		g[i].exec_menu("View = plot")
+	}
+     hbox[k].intercept(0)
+     hbox[k].map()
+   }
+vbox.intercept(0)
+vbox.map("Barela et al. 2006 output", 60, 120, 860, 600)
